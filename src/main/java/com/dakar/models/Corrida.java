@@ -31,4 +31,17 @@ public class Corrida {
         veiculos.add(carro);
     }
 
+    private void deleteVeiculo(Veiculo veiculo) {
+        veiculos.remove(veiculo);
+    }
+
+    private void deleteVeiculoComPlaca(String placa) {
+        for (Veiculo veiculo: veiculos) {
+            if (veiculo.getPlaca().equals(placa)) {
+                deleteVeiculo(veiculo);
+                break;
+            }
+        }
+    }
+
 }
