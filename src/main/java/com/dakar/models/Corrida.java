@@ -13,7 +13,19 @@ public class Corrida {
     private int limiteVeiculos;
     private final ArrayList<Veiculo> veiculos = new ArrayList<>();
 
+    public Corrida(int distancia, BigDecimal premio, String nome, int limiteVeiculos) {
+        this.distancia = distancia;
+        this.premio = premio;
+        this.nome = nome;
+        this.limiteVeiculos = limiteVeiculos;
+    }
+
     public void addMoto(int velocidade, int aceleracao, int anguloDeGiro, String placa) {
+        if (limiteAtingido()) {
+            System.out.println("Limite antigido");
+            return;
+        }
+
         Veiculo moto = new VeiculoFactory().getVeiculo(Categorias.MOTO);
         moto.setVelocidade(velocidade);
         moto.setAceleracao(aceleracao);
@@ -23,6 +35,11 @@ public class Corrida {
     }
 
     public void addCarro(int velocidade, int aceleracao, int anguloDeGiro, String placa) {
+        if (limiteAtingido()) {
+            System.out.println("Limite antigido");
+            return;
+        }
+
         Veiculo carro = new VeiculoFactory().getVeiculo(Categorias.CARRO);
         carro.setVelocidade(velocidade);
         carro.setAceleracao(aceleracao);
@@ -42,6 +59,10 @@ public class Corrida {
                 break;
             }
         }
+    }
+
+    public boolean limiteAtingido() {
+        return veiculos.size() == limiteVeiculos;
     }
 
 }
