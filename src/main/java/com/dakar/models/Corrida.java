@@ -48,11 +48,11 @@ public class Corrida {
         veiculos.add(carro);
     }
 
-    private void deleteVeiculo(Veiculo veiculo) {
+    public void deleteVeiculo(Veiculo veiculo) {
         veiculos.remove(veiculo);
     }
 
-    private void deleteVeiculoComPlaca(String placa) {
+    public void deleteVeiculoComPlaca(String placa) {
         for (Veiculo veiculo: veiculos) {
             if (veiculo.getPlaca().equals(placa)) {
                 deleteVeiculo(veiculo);
@@ -65,4 +65,26 @@ public class Corrida {
         return veiculos.size() == limiteVeiculos;
     }
 
+    public Veiculo getVencedor() {
+        Veiculo vencedor = null;
+
+        if (veiculos.size() > 0) {
+            vencedor = veiculos.get(0);
+        }
+
+        for (int i = 1; i < veiculos.size(); i++) {
+            double atual = calculaVelocidadeFinal(vencedor.getVelocidade(), vencedor.getAceleracao(), vencedor.getAnguloDeGiro(), vencedor.getPeso(), vencedor.getRodas());
+            double proximo = calculaVelocidadeFinal(veiculos.get(i).getVelocidade(), veiculos.get(i).getAceleracao(), veiculos.get(i).getAnguloDeGiro(), veiculos.get(i).getPeso(), veiculos.get(i).getRodas());
+
+            if (proximo > atual) {
+                vencedor = veiculos.get(i);
+            }
+        }
+
+        return vencedor;
+    }
+
+    public double calculaVelocidadeFinal(int velocidade, int aceleracao, int anguloRotacao, int peso, int quantidadeRodas) {
+        return velocidade * (aceleracao * 0.5) / (anguloRotacao * (peso - quantidadeRodas * 100));
+    }
 }
