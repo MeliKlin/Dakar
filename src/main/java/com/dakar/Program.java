@@ -25,6 +25,7 @@ public class Program {
         corrida.addCarro(120, 30, 8, "CBA-4321");
 
         corrida.deleteVeiculoComPlaca("AAA-4321");
+        corrida.socorrer(corrida.getVeiculos().get(1));
         System.out.println(corrida.getVencedor().getPlaca());
     }
 

@@ -1,6 +1,9 @@
 package com.dakar.models;
 
 import com.dakar.enums.Categorias;
+import com.dakar.strategies.SocorristaAuto;
+import com.dakar.strategies.SocorristaMoto;
+import com.dakar.strategies.SocorristaStrategy;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -18,6 +21,10 @@ public class Corrida {
         this.premio = premio;
         this.nome = nome;
         this.limiteVeiculos = limiteVeiculos;
+    }
+
+    public ArrayList<Veiculo> getVeiculos() {
+        return veiculos;
     }
 
     public void addMoto(int velocidade, int aceleracao, int anguloDeGiro, String placa) {
@@ -87,4 +94,16 @@ public class Corrida {
     public double calculaVelocidadeFinal(int velocidade, int aceleracao, int anguloRotacao, int peso, int quantidadeRodas) {
         return velocidade * (aceleracao * 0.5) / (anguloRotacao * (peso - quantidadeRodas * 100));
     }
+
+     public void socorrer(Veiculo veiculo) {
+        if (veiculo.getRodas() == 4) {
+            socorrerStrategy(new SocorristaAuto(), veiculo);
+        } else {
+            socorrerStrategy(new SocorristaMoto(), veiculo);
+        }
+     }
+
+     public void socorrerStrategy(SocorristaStrategy strategy, Veiculo veiculo) {
+        strategy.socorrer(veiculo.getPlaca());
+     }
 }
